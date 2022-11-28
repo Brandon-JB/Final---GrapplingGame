@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     private float horizontal;
     private float speed = 10f;
-    private float jumpingPower = 20f;
+    private float jumpingPower = 10f;
     private bool isFacingRight = true;
     public bool PlayerCode = true;
 
