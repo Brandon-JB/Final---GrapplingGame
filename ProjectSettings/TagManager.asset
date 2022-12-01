@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Level1Trigger
+  - Level2Trigger
+  - Level3Trigger
   layers:
   - Default
   - TransparentFX
@@ -11,10 +14,10 @@ TagManager:
   - Ground
   - Water
   - UI
+  - GrappleBlocks
+  - 
   - PlayerSprite
-  - 
-  - 
-  - 
+  - Covers
   - 
   - 
   - 

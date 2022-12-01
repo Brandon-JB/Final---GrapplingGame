@@ -50,15 +50,34 @@ public class GrapplingGun : MonoBehaviour
     [HideInInspector] public Vector2 grapplePoint;
     [HideInInspector] public Vector2 grappleDistanceVector;
 
+    SpriteRenderer sr;
+    public LayerMask mask;
+
     private void Start()
     {
         grappleRope.enabled = false;
         m_springJoint2D.enabled = false;
 
+        sr = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            if (launchToPoint == true)
+            {
+                launchToPoint = false;
+                sr.color = Color.blue;
+            }
+            else if (launchToPoint == false)
+            {
+                launchToPoint = true;
+                sr.color = Color.gray;
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             SetGrapplePoint();
@@ -115,6 +134,7 @@ public class GrapplingGun : MonoBehaviour
 
     void SetGrapplePoint()
     {
+
         Vector2 distanceVector = m_camera.ScreenToWorldPoint(Input.mousePosition) - gunPivot.position;
         if (Physics2D.Raycast(firePoint.position, distanceVector.normalized))
         {

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -71,4 +73,21 @@ public class PlayerController : MonoBehaviour
             transform.Rotate(0f, 180f, 0f);
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Level1Trigger")
+        {
+            SceneManager.LoadScene("Level 1");
+        }
+        else if (collision.gameObject.tag == "Level2Trigger")
+        {
+            SceneManager.LoadScene("Level 2");
+        }
+        else if (collision.gameObject.tag == "Level3Trigger")
+        {
+            SceneManager.LoadScene("Level 3");
+        }
+    }
+
 }
