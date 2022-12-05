@@ -22,6 +22,8 @@ public class GrapplingGun : MonoBehaviour
     [Header("Physics Ref:")]
     public SpringJoint2D m_springJoint2D;
     public Rigidbody2D m_rigidbody;
+    public LayerMask layerMask;
+    public LayerMask grappleBlocks;
 
     [Header("Rotation:")]
     [SerializeField] private bool rotateOverTime = true;
@@ -51,7 +53,7 @@ public class GrapplingGun : MonoBehaviour
     [HideInInspector] public Vector2 grappleDistanceVector;
 
     SpriteRenderer sr;
-    public LayerMask mask;
+    public SpriteRenderer grappleIndicator;
 
     private void Start()
     {
@@ -63,13 +65,32 @@ public class GrapplingGun : MonoBehaviour
 
     private void Update()
     {
+        Vector2 distanceVector = m_camera.ScreenToWorldPoint(Input.mousePosition) - gunPivot.position;
+        if (Physics2D.Raycast(firePoint.position, distanceVector.normalized))
+        {
+            RaycastHit2D _hit = Physics2D.Raycast(firePoint.position, distanceVector.normalized, Mathf.Infinity, layerMask);
+            if (_hit.transform.gameObject.layer == grappableLayerNumber || grappleToAll)
+            {
+                if (Vector2.Distance(_hit.point, firePoint.position) <= maxDistnace || !hasMaxDistance)
+                {
+                    grappleIndicator.color = Color.green;
+                }
+                
+            }
+            else
+            {
+                grappleIndicator.color = Color.red;
+            }
+        }
 
-        if (Input.GetKeyDown(KeyCode.Tab))
+
+
+        if (Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(KeyCode.Mouse1))
         {
             if (launchToPoint == true)
             {
                 launchToPoint = false;
-                sr.color = Color.blue;
+                sr.color = Color.red;
             }
             else if (launchToPoint == false)
             {
@@ -138,7 +159,7 @@ public class GrapplingGun : MonoBehaviour
         Vector2 distanceVector = m_camera.ScreenToWorldPoint(Input.mousePosition) - gunPivot.position;
         if (Physics2D.Raycast(firePoint.position, distanceVector.normalized))
         {
-            RaycastHit2D _hit = Physics2D.Raycast(firePoint.position, distanceVector.normalized);
+            RaycastHit2D _hit = Physics2D.Raycast(firePoint.position, distanceVector.normalized, Mathf.Infinity, layerMask);
             if (_hit.transform.gameObject.layer == grappableLayerNumber || grappleToAll)
             {
                 if (Vector2.Distance(_hit.point, firePoint.position) <= maxDistnace || !hasMaxDistance)

@@ -88,6 +88,10 @@ public class PlayerController : MonoBehaviour
         {
             SceneManager.LoadScene("Level 3");
         }
+        else if (collision.gameObject.tag == "LevelFinish")
+        {
+            SceneManager.LoadScene("LevelSelect");
+        }
     }
 
 }
