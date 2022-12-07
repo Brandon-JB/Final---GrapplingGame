@@ -54,6 +54,7 @@ public class GrapplingGun : MonoBehaviour
 
     SpriteRenderer sr;
     public SpriteRenderer grappleIndicator;
+    public AudioSource grappleSound;
 
     private void Start()
     {

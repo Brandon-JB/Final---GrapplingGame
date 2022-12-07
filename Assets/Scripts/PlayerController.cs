@@ -11,13 +11,14 @@ public class PlayerController : MonoBehaviour
     private float jumpingPower = 10f;
     private bool isFacingRight = true;
     public bool PlayerCode = true;
+    public GameObject gameOverScreen;
+    public GameObject GrapplingGun;
 
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundlayer;
-    [SerializeField] GameObject GameOverScreen;
-    //public AudioSource GameOver;
+    public AudioSource GameOver;
     //public GameObject AudioObject;
 
     void Start()
@@ -40,13 +41,6 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         }
-
-        if (Input.GetKeyDown("escape"))
-        {
-            GameOverScreen.SetActive(true);
-            Time.timeScale = 0f;
-        }
-
         //flip();
     }
 
@@ -76,6 +70,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //Level Triggers
+
         if (collision.gameObject.tag == "Level1Trigger")
         {
             SceneManager.LoadScene("Level 1");
@@ -88,10 +84,53 @@ public class PlayerController : MonoBehaviour
         {
             SceneManager.LoadScene("Level 3");
         }
-        else if (collision.gameObject.tag == "LevelFinish")
+        else if (collision.gameObject.tag == "Level1Finish")
         {
             SceneManager.LoadScene("LevelSelect");
+            LevelTracker.levelsBeaten = 1;
+        }
+        else if (collision.gameObject.tag == "Level2Finish")
+        {
+            SceneManager.LoadScene("LevelSelect");
+            LevelTracker.levelsBeaten = 2;
+        }
+        else if (collision.gameObject.tag == "Level3Finish")
+        {
+            SceneManager.LoadScene("LevelSelect");
+            LevelTracker.levelsBeaten = 3;
+        }
+
+        else if (collision.gameObject.tag == "WinTrigger")
+        {
+            SceneManager.LoadScene("Win");
+        }
+
+        else if (collision.gameObject.tag == "??? Trigger")
+        {
+            SceneManager.LoadScene("The Room");
+        }
+
+        //Other collisions
+
+        if (collision.gameObject.tag == "Enemy")
+        {
+
+            gameOverScreen.SetActive(true);
+            Time.timeScale = 0f;
+            GrapplingGun.SetActive(false);
+            GameOver.Play();
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "DeathBlock")
+        {
+
+            gameOverScreen.SetActive(true);
+            Time.timeScale = 0f;
+            GrapplingGun.SetActive(false);
+            GameOver.Play();
+        }
+    }
 }

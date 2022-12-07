@@ -7,7 +7,14 @@ TagManager:
   - Level1Trigger
   - Level2Trigger
   - Level3Trigger
-  - LevelFinish
+  - Level1Finish
+  - Level2Finish
+  - Level3Finish
+  - Wall
+  - Enemy
+  - DeathBlock
+  - ??? Trigger
+  - WinTrigger
   layers:
   - Default
   - TransparentFX

@@ -6,6 +6,11 @@ public class LevelTracker : MonoBehaviour
 {
 
     static LevelTracker Instance;
+    public static int levelsBeaten = 0;
+
+    public GameObject level2Block;
+    public GameObject level3Block;
+    public GameObject WinBlock;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +25,21 @@ public class LevelTracker : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
+
+        if (levelsBeaten >= 1)
+        {
+            Destroy(level2Block);
+        }
+
+        if (levelsBeaten >= 2)
+        {
+            Destroy(level3Block);
+        }
+
+        if (levelsBeaten >= 3)
+        {
+            Destroy(WinBlock);
+        }
     }
 
     // Update is called once per frame
